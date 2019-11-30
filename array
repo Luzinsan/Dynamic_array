@@ -1,0 +1,61 @@
+//Пользователя просят ввести количество имён а потом и сами имена
+//Программа запоминает имена, отсортировывает и выводит отсортированный список на экран
+//Имена и/или/без фамилии(й) нужно вводить с заглавной буквы и только на латинице
+//Пробелы допускаются (используется getline())
+
+#include <iostream>
+#include <string>
+
+void sort(std::string *names, int count) 
+{
+	for (int i = 0; i < count-1; i++)
+	{
+		for (int w = i + 1; w < count; w++) 
+		{
+			if (names[i] > names[w])
+				std::swap(names[i], names[w]);
+		}
+	}
+}
+
+int main()
+{
+	int length(1);
+
+	do{
+		std::cout << "How many names will you enter? ";
+		std::cin >> length;
+		
+
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(32767, '\n');
+			std::cout << "Enter a number greater than zero!\n\n";
+		}
+
+	} while (length <= 0);
+
+	std::string *names = new std::string[length];
+
+	for (int i = 0; i < length; i++) 
+	{
+		std::cout << "\nEnter name #" << i+1 << " ";
+		getline(std::cin, names[i]);
+	}
+
+	sort(names, length);
+
+	std::cout << "\nHere is your sorted list:\n";
+
+	for (int i = 0; i < length; i++)
+	{
+		std::cout << "Name #" << i + 1 << " ";
+		std::cout << names[i];
+		std::cout << '\n';
+	}
+
+	delete[] names;
+	names = nullptr;
+}
+
